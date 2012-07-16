@@ -8,7 +8,7 @@ More info: http://en.wikipedia.org/wiki/One-time_pad
 Creating windows exe
 ====================
 
-To create an EXE first make sure python is in youth PATH environment variable. 
+To create an EXE first make sure python is in your PATH environment variable. 
 
 Then install py2exe.
 
