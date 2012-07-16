@@ -50,7 +50,7 @@ class App:
         # cypher
         self.cypher_label = Label(self.cypher_frame, text="Cypher")
         self.cypher_label.pack()
-        self.cypher = Text(cypher_frame, width=20, height=20)
+        self.cypher = Text(self.cypher_frame, width=20, height=20)
         self.cypher.pack(fill=BOTH, expand=1)
 
     def do_encrypt(self):
