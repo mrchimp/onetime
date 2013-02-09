@@ -1,9 +1,12 @@
 # -*- coding: cp1252 -*-
 from Tkinter import *
 import tkMessageBox
+import onetime
 
 class App:
     def __init__(self, master):
+        self.default_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,?!@\/|;'#:~[]{}_+-=()*&^%$<>"
+    
         container = Frame(master)
         container.pack(fill=BOTH, expand=1)
 
@@ -20,7 +23,7 @@ class App:
         self.alpha_frame = Frame(master)
         self.alpha_frame.pack(side=BOTTOM)
         self.alphabet_text = Text(self.alpha_frame, height=2, width=60)
-        self.alphabet_text.insert(END, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,?!@\/|;'#:~[]{}_+-=()*&^%$<>")
+        self.alphabet_text.insert(END, self.default_alphabet)
         #self.alphabet_text.config(state=DISABLED)
         self.alphabet_text.pack(side=RIGHT)
         self.alpha_label = Label(self.alpha_frame, text="Alphabet")
@@ -46,7 +49,6 @@ class App:
         self.key = Text(self.key_frame, width=20, height=20)
         self.key.pack(fill=BOTH, expand=1)
 
-
         # cypher
         self.cypher_label = Label(self.cypher_frame, text="Cypher")
         self.cypher_label.pack()
@@ -62,42 +64,25 @@ class App:
         
         self.cypher.delete(1.0, END)
         
-        for x in range(length):             # for each character:
-            pnum = self.find_num(plain[x]) # plaintext as number
-            try:
-                knum = self.find_num(key[x])   # key as number
-            except IndexError:
-                self.show_error("Oops", "Key was too short.")
-                return 0
-            cnum = (pnum + knum) % len(self.letters_list)    # cypher as number
-            cletter = self.letters_list[cnum]                # cypher as letter
-            self.cypher.insert(END, cletter)
+        codec = onetime.codec()
+        cypher = codec.encrypt(plain, key, self.alphabet)
+        self.cypher.insert(END, cypher)
 
     def do_decrypt(self):
         self.populate_alphabet()
         cypher = self.cypher.get(1.0, END)
         key = self.key.get(1.0, END)
-        plain = ""
-        length = len(cypher) - 1
         self.plain.delete(1.0, END)
         
-        for x in range(length):
-            cnum = self.find_num(cypher[x])
-            knum = self.find_num(key[x])
-            pnum = (cnum - knum) % len(self.letters_list)
-            pletter = self.letters_list[pnum]
-            self.plain.insert(END, pletter)
-
+        codec = onetime.codec()
+        plain = codec.decrypt(cypher, key, self.alphabet)
+        self.plain.insert(END, plain)
+        
     def show_error(self, title, message):
         tkMessageBox.showinfo(title, message)
 
     def populate_alphabet(self):
-        self.letters_list = list(self.alphabet_text.get(1.0, END))
-
-    def find_num(self, search_str):
-        for z in range(len(self.letters_list)):
-            if self.letters_list[z] == search_str:
-                return z
+        self.alphabet = list(self.alphabet_text.get(1.0, END))
         
 root = Tk()
 root.wm_title("Onetime")
