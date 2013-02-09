@@ -57,23 +57,18 @@ class App:
 
     def do_encrypt(self):
         self.populate_alphabet()
-        plain = self.plain.get(1.0, END)
-        key = self.key.get(1.0, END)
-        length = len(plain) - 1
-        cypher = ""
-        
+        plain = self.plain.get(1.0, END).rstrip('\n')
+        key = self.key.get(1.0, END).rstrip('\n')
         self.cypher.delete(1.0, END)
-        
         codec = onetime.codec()
         cypher = codec.encrypt(plain, key, self.alphabet)
         self.cypher.insert(END, cypher)
 
     def do_decrypt(self):
         self.populate_alphabet()
-        cypher = self.cypher.get(1.0, END)
-        key = self.key.get(1.0, END)
+        cypher = self.cypher.get(1.0, END).rstrip('\n')
+        key = self.key.get(1.0, END).rstrip('\n')
         self.plain.delete(1.0, END)
-        
         codec = onetime.codec()
         plain = codec.decrypt(cypher, key, self.alphabet)
         self.plain.insert(END, plain)

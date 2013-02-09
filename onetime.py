@@ -8,8 +8,7 @@ class codec:
             try:
                 knum = self.find_num(key[x], alphabet)   # key as number
             except IndexError:
-                self.show_error("Oops", "Key was too short.")
-                return 0
+                return cypher + '- [KEY TOO SHORT]'
             cnum = (pnum + knum) % len(alphabet)    # cypher as number
             cypher += alphabet[cnum]                # cypher as letter
         
@@ -23,8 +22,7 @@ class codec:
             try:
                 knum = self.find_num(key[x], alphabet)
             except IndexError:
-                self.show_error("Oops", "Key was too short")
-                return 0
+                return plain + '- [KEY TOO SHORT]'
             pnum = (cnum - knum) % len(alphabet)
             plain += alphabet[pnum]
         
