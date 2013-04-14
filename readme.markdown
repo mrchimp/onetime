@@ -1,9 +1,13 @@
 One Time Pad Codec
 ==================
 
-This encodes and decodes text using one-time-pad encryption.
+[One-time pad encryption](http://en.wikipedia.org/wiki/One-time_pad) is a theoretically uncrackable encryption method based on a shared random key.
 
-More info: http://en.wikipedia.org/wiki/One-time_pad
+This codec can be used in three ways:
+
+ 1. Include the class in your own code (onetime.py).
+ 2. Use the codec from the command line (onetime.py).
+ 3. Use the GUI (onetime_gui.py)
 
 Creating windows exe
 ====================
