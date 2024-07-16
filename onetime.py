@@ -11,7 +11,7 @@ class codec:
                 return cypher + '- [KEY TOO SHORT]'
             cnum = (pnum + knum) % len(alphabet)    # cypher as number
             cypher += alphabet[cnum]                # cypher as letter
-        
+
         return cypher
 
     def decrypt(self, cypher, key, alphabet):
@@ -25,13 +25,15 @@ class codec:
                 return plain + '- [KEY TOO SHORT]'
             pnum = (cnum - knum) % len(alphabet)
             plain += alphabet[pnum]
-        
+
         return plain
-    
+
     def find_num(self, search_str, alphabet):
         for z in range(len(alphabet)):
             if alphabet[z] == search_str:
                 return z
+
+        return 0
 
 if __name__ == "__main__":
     import argparse
@@ -44,22 +46,22 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    default_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,?!@\/|;'#:~[]{}_+-=()*&^%$<>"
+    default_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,?!@\\/|;'#:~[]{}_+-=()*&^%$<>"
 
-    codec = codec()
-    
+    my_codec = codec()
+
     if args.alphabet:
         alphabet = args.alphabet
     else:
         alphabet = default_alphabet
-    
+
     if not alphabet:
         import sys
         sys.exit()
-    
+
     if (args.action == 'enc' or args.action == 'encrypt'):
-        print codec.encrypt(args.input, args.key, alphabet)
+        print(my_codec.encrypt(args.input, args.key, alphabet))
     elif (args.action == 'dec' or args.action == 'decrypt'):
-        print codec.decrypt(args.input, args.key, alphabet)
+        print(my_codec.decrypt(args.input, args.key, alphabet))
     else:
-        print 'What was that?'
+        print('What was that?')

@@ -1,12 +1,11 @@
-# -*- coding: cp1252 -*-
-from Tkinter import *
-import tkMessageBox
+from tkinter import *
+from tkinter import messagebox
 import onetime
 
 class App:
     def __init__(self, master):
         self.default_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,?!@\/|;'#:~[]{}_+-=()*&^%$<>"
-    
+
         container = Frame(master)
         container.pack(fill=BOTH, expand=1)
 
@@ -18,7 +17,7 @@ class App:
 
         self.cypher_frame = Frame(container)
         self.cypher_frame.pack(side=LEFT, fill=BOTH, expand=1)
-        
+
         # Alphabet Frame
         self.alpha_frame = Frame(master)
         self.alpha_frame.pack(side=BOTTOM)
@@ -28,8 +27,8 @@ class App:
         self.alphabet_text.pack(side=RIGHT)
         self.alpha_label = Label(self.alpha_frame, text="Alphabet")
         self.alpha_label.pack(side=LEFT)
-        
-        # Encrypt button 
+
+        # Encrypt button
         self.encrypt_btn = Button(self.plain_frame, text="Encrypt -->", command=self.do_encrypt)
         self.encrypt_btn.pack(side=BOTTOM)
 
@@ -42,7 +41,7 @@ class App:
         self.plain_label.pack()
         self.plain = Text(self.plain_frame, width=20, height=20)
         self.plain.pack(fill=BOTH, expand=1)
-        
+
         # key
         self.key_label = Label(self.key_frame, text="Key")
         self.key_label.pack(side=TOP)
@@ -72,13 +71,13 @@ class App:
         codec = onetime.codec()
         plain = codec.decrypt(cypher, key, self.alphabet)
         self.plain.insert(END, plain)
-        
+
     def show_error(self, title, message):
-        tkMessageBox.showinfo(title, message)
+        messagebox.showinfo(title, message)
 
     def populate_alphabet(self):
         self.alphabet = list(self.alphabet_text.get(1.0, END))
-        
+
 root = Tk()
 root.wm_title("Onetime")
 app = App(root)
